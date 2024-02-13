@@ -11,10 +11,7 @@ let showMenuBar = ref(true);
       <q-toolbar>
 
         <q-toolbar-title>
-          <q-avatar>
-            <q-img src="../assets/Jedlik_small.png" />
-          </q-avatar>
-          Jedlik
+          Dolgozat minta
         </q-toolbar-title>
       </q-toolbar>
     </q-header>

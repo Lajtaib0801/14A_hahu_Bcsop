@@ -1,11 +1,21 @@
-<script setup lang="ts"></script>
-
+<script setup lang="ts">
+import { useStore } from "../stores/store";
+const store = useStore();
+</script>
 <template>
   <q-page>
-    <div class="column flex-center" style="min-height: inherit">
-      <img alt="Jedlik logo" src="../assets/Jedlik_big.png" />
-      <h2>Jedlik Ányos Technikum - Győr</h2>
-    </div>
+    <q-select
+    v-model="store.many.document.categoryId"
+    clearable
+    color="green"
+      emit-value
+      label="Kategória"
+      map-options
+      option-label="categoryNameField"
+      option-value="id"
+      :options="store.one.documents"
+      :rules="[(v) => v != null || 'Kérem válasszon kategóriát!']"
+    />
   </q-page>
 </template>
 
