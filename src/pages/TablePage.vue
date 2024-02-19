@@ -3,7 +3,8 @@ import { useStore, IMany } from "../stores/store";
 import { onMounted } from "vue";
 import { QTableColumn } from "quasar";
 import NewDialogComponent from "../components/NewDialogComponent.vue";
-import EditDialogComponent from "../components/EditDialogComponent.vue";
+// import EditDialogComponent from "../components/EditDialogComponent.vue";
+import NewEditDialog from "src/components/NewEditDialog.vue";
 const store = useStore();
 
 const columns: QTableColumn[] = [
@@ -97,7 +98,7 @@ function filterUpdate() {
       </template>
     </q-table>
     <NewDialogComponent />
-    <EditDialogComponent />
+    <NewEditDialog />
     <!-- {{ store.app.selected }} -->
 
     <!-- Buttons: -->

@@ -17,7 +17,7 @@ export interface IApp {
     pozitívGomb: string;
     negatívGomb: string;
     válasz?: boolean;
-  }
+  };
 }
 
 export interface IOne {
@@ -85,11 +85,11 @@ export const useStore = defineStore({
       filter: "",
       selectedMany: [],
       selectedOne: [],
-      yesNoComp:{
+      yesNoComp: {
         kérdés: "Igen vagy nem?",
         pozitívGomb: "Igen",
-        negatívGomb: "Nem"
-      }
+        negatívGomb: "Nem",
+      },
     },
   }),
   getters: {},
@@ -98,11 +98,27 @@ export const useStore = defineStore({
       Loading.show();
       this.one.documents = [];
       api
-        .get("api/categories")
+        .get("api/advertisements")
         .then((res) => {
           Loading.hide();
           if (res?.data) {
             this.one.documents = res.data;
+          }
+        })
+        .catch((error) => {
+          ShowErrorWithNotify(error);
+        });
+    },
+    // TODO fix this
+    async getAllCategories() {
+      Loading.show();
+      this.many.documents = [];
+      api
+        .get("api/categories")
+        .then((res) => {
+          Loading.hide();
+          if (res?.data) {
+            this.many.documents = res.data;
           }
         })
         .catch((error) => {
