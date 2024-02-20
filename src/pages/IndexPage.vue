@@ -5,7 +5,7 @@ import { ref } from "vue";
 import { onMounted } from "vue";
 const store = useStore();
 const selectedCategoryName = ref(store.one.documents[0]);
-let toggled = ref(true);
+let toggled = ref(false);
 
 const longText = ref("");
 let displayText = ref("");
@@ -14,10 +14,8 @@ onMounted(() => {
   store.one_GetByCategory(selectedCategoryName?.value?.categoryNameField || "Személyautó");
 });
 
-// console.log(data.value);
-// console.log(store.many.documents);
+console.log(store.many.cars);
 
-// console.log(selectedCategoryName.value.category?.categoryNameField)
 
 const handleToggle = (toggled) => {
   if (!toggled) {
@@ -36,7 +34,7 @@ const handleToggle = (toggled) => {
     }
   } else {
     displayText.value = longText.value;
-  }
+  }  
 };
 </script>
 <template>
@@ -91,7 +89,7 @@ const handleToggle = (toggled) => {
             <q-img role="img" :src="item.kepek?.[0]" style="max-height: 200px"></q-img>
           </q-card-section>
           <q-card-section style="background-color: rgb(200, 190, 156)">
-            <div class="text-h7 text-justify">link</div>
+            <div class="text-h7 text-justify">{{ item.kepek?.[0] }}</div>
           </q-card-section>
           <q-card-actions class="justify-center" style="background-color: rgb(255, 228, 196)">
             <q-btn class="bg-green-3" label="Hirdetés szerkesztése" no-caps type="button"></q-btn>
