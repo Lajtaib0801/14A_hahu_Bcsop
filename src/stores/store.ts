@@ -38,21 +38,21 @@ export interface IMany {
   // priceField?: number;
   // imgField?: string;
   // category?: IOne;
-  _id?: number,
-  kategoria_id?: number,
-  cim?: string,
-  evjarat?: string,
-  km_allas?: number,
-  szin?: string,
-  uzemanyag?: string,
-  hengerurtartalom?: number,
-  teljesitmeny?: number,
-  serulesmentes?: true,
-  leiras?: string,
-  hirdetes_datum?: Date,
-  vetelar?: number,
-  kepek?: [string],
-  teljesitmeny_kw?: number
+  _id?: number;
+  kategoria_id?: number;
+  cim?: string;
+  evjarat?: string;
+  km_allas?: number;
+  szin?: string;
+  uzemanyag?: string;
+  hengerurtartalom?: number;
+  teljesitmeny?: number;
+  serulesmentes?: true;
+  leiras?: string;
+  hirdetes_datum?: Date;
+  vetelar?: number;
+  kepek?: [string];
+  teljesitmeny_kw?: number;
 }
 
 export interface IOther {
@@ -70,6 +70,7 @@ interface IState {
     document: IMany;
     documentOld: IMany;
     documents: IMany[];
+    cars: IMany[];
   };
   other: {
     document: IOther;
@@ -91,6 +92,7 @@ export const useStore = defineStore({
       document: {},
       documentOld: {},
       documents: [],
+      cars: []
     },
     other: {
       document: {},
@@ -134,8 +136,8 @@ export const useStore = defineStore({
         Loading.hide();
         if (res?.data) {
           // console.log(res);
-          this.many.documents = res.data.map((r: any) => r.kategoria_hirdetesei).flat();
-          this.many.documents = this.many.documents.map((r: any) => ({
+          this.many.cars = res.data.map((r: any) => r.kategoria_hirdetesei).flat();
+          this.many.cars = this.many.cars.map((r: any) => ({
             ...r,
             aktKep: 0,
             expandedLeiras: false,

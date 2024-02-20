@@ -1,16 +1,20 @@
 <script>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useStore } from "src/stores/store";
 
-let displayText = ref(
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labores et dolore magna aliqua. Lorem ipsum dolor sit amet consectetur adipisicin elit. Animi assumenda amet temporibus ab! Velit quibusdam voluptate maxime commodi quis minima dolorum consectetur perferendis fuga atque cumque voluptatibus a, obcaecati odit. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam consectetur repellendus quam odio impedit ad placeat distinctio consequuntur doloribus adipisci. Dolorem harum asperiores sed delectu recusandae nesciunt sunt nemo debitis.",
-);
+const store = useStore();
+
+onMounted(() => {
+  store.getAllCategories();
+  store.one_GetByCategory(selectedCategoryName?.value?.categoryNameField || "Személyautó");
+});
+
+let displayText = ref("");
 export default {
-  props: ["item"],
+  props: ["index"],
   setup(props) {
-    console.log(props.item)
-    const longText = ref(
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labores et dolore magna aliqua. Lorem ipsum dolor sit amet consectetur adipisicin elit. Animi assumenda amet temporibus ab! Velit quibusdam voluptate maxime commodi quis minima dolorum consectetur perferendis fuga atque cumque voluptatibus a, obcaecati odit. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam consectetur repellendus quam odio impedit ad placeat distinctio consequuntur doloribus adipisci. Dolorem harum asperiores sed delectu recusandae nesciunt sunt nemo debitis.",
-    );
+    console.log(props.index);
+    const longText = ref(store.many.documents[props.index].leiras);
     const toggled = ref(false);
     const handleToggle = (toggled) => {
       if (!toggled) {
@@ -39,6 +43,7 @@ export default {
       handleToggle,
     };
   },
+
   mounted() {
     this.handleToggle();
   },
