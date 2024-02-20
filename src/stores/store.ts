@@ -1,6 +1,9 @@
 import { defineStore } from "pinia";
 import { Notify, Loading } from "quasar";
 import { api } from "src/boot/axios";
+import axios from "axios";
+// import { StringLiteral } from "typescript";
+
 // import router from "src/router";
 
 // === INTERFACES ===
@@ -26,15 +29,30 @@ export interface IOne {
 }
 
 export interface IMany {
-  id?: number; // PK
-  categoryId?: number; // FK
-  titleField?: string;
-  descField?: string;
-  dateField?: string;
-  boolField?: boolean;
-  priceField?: number;
-  imgField?: string;
-  category?: IOne;
+  // id?: number; // PK
+  // categoryId?: number; // FK
+  // titleField?: string;
+  // descField?: string;
+  // dateField?: string;
+  // boolField?: boolean;
+  // priceField?: number;
+  // imgField?: string;
+  // category?: IOne;
+  _id?: number,
+  kategoria_id?: number,
+  cim?: string,
+  evjarat?: string,
+  km_allas?: number,
+  szin?: string,
+  uzemanyag?: string,
+  hengerurtartalom?: number,
+  teljesitmeny?: number,
+  serulesmentes?: true,
+  leiras?: string,
+  hirdetes_datum?: Date,
+  vetelar?: number,
+  kepek?: [string],
+  teljesitmeny_kw?: number
 }
 
 export interface IOther {
@@ -109,6 +127,22 @@ export const useStore = defineStore({
           ShowErrorWithNotify(error);
         });
     },
+    async one_GetByCategory(kategoria: string): Promise<void> {
+      Loading.show();
+      const getByCategoryApi = axios.create({ baseURL: "https://hahu.cyclic.app" });
+      getByCategoryApi.get(`/api/kategoriak/${kategoria}/hirdetesek`).then((res) => {
+        Loading.hide();
+        if (res?.data) {
+          // console.log(res);
+          this.many.documents = res.data.map((r: any) => r.kategoria_hirdetesei).flat();
+          this.many.documents = this.many.documents.map((r: any) => ({
+            ...r,
+            aktKep: 0,
+            expandedLeiras: false,
+          }));
+        }
+      });
+    },
     // TODO fix this
     async getAllCategories() {
       Loading.show();
@@ -142,24 +176,24 @@ export const useStore = defineStore({
         });
     },
 
-    async many_GetById(): Promise<void> {
-      if (this.many?.document?.id) {
-        Loading.show();
-        api
-          .get(`api/advertisements/${this.many.document.id}`)
-          .then((res) => {
-            Loading.hide();
-            if (res?.data) {
-              this.many.document = res.data;
-              // store startig data to PATCH method:
-              Object.assign(this.many.documentOld, this.many.document);
-            }
-          })
-          .catch((error) => {
-            ShowErrorWithNotify(error);
-          });
-      }
-    },
+    // async many_GetById(): Promise<void> {
+    //   if (this.many?.document?.id) {
+    //     Loading.show();
+    //     api
+    //       .get(`api/advertisements/${this.many.document.id}`)
+    //       .then((res) => {
+    //         Loading.hide();
+    //         if (res?.data) {
+    //           this.many.document = res.data;
+    //           // store startig data to PATCH method:
+    //           Object.assign(this.many.documentOld, this.many.document);
+    //         }
+    //       })
+    //       .catch((error) => {
+    //         ShowErrorWithNotify(error);
+    //       });
+    //   }
+    // },
 
     async many_Filter(): Promise<void> {
       if (this.app?.filter) {
@@ -179,59 +213,59 @@ export const useStore = defineStore({
       }
     },
 
-    async many_EditById(): Promise<void> {
-      if (this.many?.document?.id) {
-        const diff: any = {};
-        // the diff object only stores changed fields:
-        Object.keys(this.many.document).forEach((k, i) => {
-          const newValue = Object.values(this.many.document)[i];
-          const oldValue = Object.values(this.many.documentOld)[i];
-          if (newValue != oldValue) diff[k] = newValue;
-        });
-        if (Object.keys(diff).length == 0) {
-          Notify.create({
-            message: "Nothing changed!",
-            color: "negative",
-          });
-        } else {
-          Loading.show();
-          api
-            .patch(`api/advertisements/${this.many.document.id}`, diff)
-            .then((res) => {
-              Loading.hide();
-              if (res?.data?.id) {
-                this.many_GetAll(); // refresh dataN with read all data again from backend
-                Notify.create({
-                  message: `Document with id=${res.data.id} has been edited successfully!`,
-                  color: "positive",
-                });
-              }
-            })
-            .catch((error) => {
-              ShowErrorWithNotify(error);
-            });
-        }
-      }
-    },
+    // async many_EditById(): Promise<void> {
+    //   if (this.many?.document?.id) {
+    //     const diff: any = {};
+    //     // the diff object only stores changed fields:
+    //     Object.keys(this.many.document).forEach((k, i) => {
+    //       const newValue = Object.values(this.many.document)[i];
+    //       const oldValue = Object.values(this.many.documentOld)[i];
+    //       if (newValue != oldValue) diff[k] = newValue;
+    //     });
+    //     if (Object.keys(diff).length == 0) {
+    //       Notify.create({
+    //         message: "Nothing changed!",
+    //         color: "negative",
+    //       });
+    //     } else {
+    //       Loading.show();
+    //       api
+    //         .patch(`api/advertisements/${this.many.document.id}`, diff)
+    //         .then((res) => {
+    //           Loading.hide();
+    //           if (res?.data?.id) {
+    //             this.many_GetAll(); // refresh dataN with read all data again from backend
+    //             Notify.create({
+    //               message: `Document with id=${res.data.id} has been edited successfully!`,
+    //               color: "positive",
+    //             });
+    //           }
+    //         })
+    //         .catch((error) => {
+    //           ShowErrorWithNotify(error);
+    //         });
+    //     }
+    //   }
+    // },
 
-    async many_DeleteById(): Promise<void> {
-      if (this.many?.document?.id) {
-        Loading.show();
-        api
-          .delete(`api/advertisements/${this.many.document.id}`)
-          .then(() => {
-            Loading.hide();
-            this.many_GetAll(); // refresh dataN with read all data again from backend
-            Notify.create({
-              message: `Document with id=${this.many.document.id} has been deleted successfully!`,
-              color: "positive",
-            });
-          })
-          .catch((error) => {
-            ShowErrorWithNotify(error);
-          });
-      }
-    },
+    // async many_DeleteById(): Promise<void> {
+    //   if (this.many?.document?.id) {
+    //     Loading.show();
+    //     api
+    //       .delete(`api/advertisements/${this.many.document.id}`)
+    //       .then(() => {
+    //         Loading.hide();
+    //         this.many_GetAll(); // refresh dataN with read all data again from backend
+    //         Notify.create({
+    //           message: `Document with id=${this.many.document.id} has been deleted successfully!`,
+    //           color: "positive",
+    //         });
+    //       })
+    //       .catch((error) => {
+    //         ShowErrorWithNotify(error);
+    //       });
+    //   }
+    // },
 
     async many_Create(): Promise<void> {
       if (this.many?.document) {
