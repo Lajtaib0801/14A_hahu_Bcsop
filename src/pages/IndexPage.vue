@@ -4,14 +4,14 @@ import { useStore } from "src/stores/store";
 import { ref } from "vue";
 import { onMounted } from "vue";
 const store = useStore();
-const selectedCategoryName = ref(store.one.documents[0]);
+const selectedCategoryName = ref(store.many.cars[0].kategoria_id);
 let toggled = ref(false);
 
 const longText = ref("");
 let displayText = ref("");
 onMounted(() => {
   store.getAllCategories();
-  store.one_GetByCategory(selectedCategoryName?.value?.categoryNameField || "Személyautó");
+  store.one_GetByCategory(selectedCategoryName.value?.toString() || "Személyautó");
 });
 
 console.log(store.many.cars);
