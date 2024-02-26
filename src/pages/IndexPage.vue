@@ -15,7 +15,22 @@ onMounted(() => {
 });
 
 console.log(store.many.cars);
+const formatPrice = (price: number | string | undefined): string => {
+  if (!price) {
+    return "";
+  }
+  const ubreakableSpace = "\u00A0";
+  const p = price?.toString();
+  let result = "";
+  for (let i = p.length - 1; i >= 0; i--) {
+    result = p[i] + result;
+    if ((result.length + 1) % 4 == 0) {
+      result = ubreakableSpace + result;
+    }
+  }
 
+  return result + ubreakableSpace + "Ft";
+};
 
 const handleToggle = (toggled) => {
   if (!toggled) {
@@ -34,7 +49,7 @@ const handleToggle = (toggled) => {
     }
   } else {
     displayText.value = longText.value;
-  }  
+  }
 };
 </script>
 <template>
@@ -56,7 +71,7 @@ const handleToggle = (toggled) => {
       <div v-for="(item, index) in store.many.cars" :key="index" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
         <q-card bordered class="q-ma-md" flat>
           <q-card-section class="text-center text-h5" style="background-color: rgb(200, 190, 156)">
-            {{ item.cim }} - {{ item.vetelar }}
+            {{ item.cim }} - {{ formatPrice(item.vetelar) }}
           </q-card-section>
           <q-card-section class="text-h7" style="background-color: rgb(255, 228, 196)">
             <ul>
@@ -67,7 +82,7 @@ const handleToggle = (toggled) => {
                 <span>Évjárat: </span><b>{{ item.evjarat }}</b>
               </li>
               <li>
-                <span>Hengerűrtartalom: </span><b>{{ item.hengerurtartalom }}</b>
+                <span>Hengerűrtartalom: </span><b>{{ item.hengerurtartalom }} cm<sup>2</sup></b>
               </li>
               <li>
                 <span>Hirdetés dátuma: </span><b>{{ item.hirdetes_datum }}</b>

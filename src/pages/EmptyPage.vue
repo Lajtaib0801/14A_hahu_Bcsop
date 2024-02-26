@@ -16,6 +16,22 @@ onMounted(() => {
 const selectionChanged = () => {
   store.one_GetByCategory(selectedCategoryName.value);
 };
+
+const formatPrice = (price: number | string | undefined): string => {
+  if (!price) {
+    return "";
+  }
+  const p = price?.toString();
+  let result = "";
+  for (let i = p.length - 1; i >= 0; i--) {
+    result = p[i] + result;
+    if ((result.length + 1) % 4 == 0) {
+      result = " " + result;
+    }
+  }
+
+  return result + " Ft";
+};
 // console.log(selectedCategoryName.value.category?.categoryNameField)
 
 // const handleToggle = (toggled) => {
@@ -56,7 +72,7 @@ const selectionChanged = () => {
       <div v-for="(item, index) in store.many.documents" :key="index" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
         <q-card bordered class="q-ma-md" flat>
           <q-card-section class="text-center text-h5" style="background-color: rgb(200, 190, 156)">
-            {{ item.cim }} - {{ item.vetelar }}
+            {{ item.cim }} - {{ formatPrice(item.vetelar) }}
           </q-card-section>
           <q-card-section class="text-h7" style="background-color: rgb(255, 228, 196)">
             <ul>
