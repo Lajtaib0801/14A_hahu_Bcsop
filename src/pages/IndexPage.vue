@@ -4,7 +4,7 @@ import { useStore } from "src/stores/store";
 import { ref } from "vue";
 import { onMounted } from "vue";
 const store = useStore();
-const selectedCategoryName = ref();
+const selectedCategoryName = ref("Személyautó");
 let toggled = ref(false);
 
 const longText = ref("");
@@ -68,7 +68,6 @@ const handleToggle = (toggled) => {
     <div class="row justify-center">
       <q-select
         v-model="selectedCategoryName"
-        clearable
         emit-value
         label="Kategória"
         map-options
