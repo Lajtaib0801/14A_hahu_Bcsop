@@ -30,14 +30,14 @@ export interface IOne {
 
 export interface IMany {
   // id?: number; // PK
-  // categoryId?: number; // FK
-  // titleField?: string;
-  // descField?: string;
+  categoryId?: number; // FK
+  titleField?: string;
+  descField?: string;
   // dateField?: string;
   // boolField?: boolean;
   // priceField?: number;
   // imgField?: string;
-  // category?: IOne;
+  //category?: IOne;
   _id?: number;
   kategoria_id?: number;
   cim?: string;

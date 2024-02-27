@@ -6,7 +6,6 @@ const store = useStore();
 function ShowDialog() {
   // kategórák kiolvasása az "egy" oldalról
   store.one_GetAll();
-  store.many_GetById(); // Before show dialog set "store.many.document.id" field!!!
 }
 
 function HideDialog() {
@@ -26,7 +25,6 @@ function Submit() {
     persistent: true,
   })
     .onOk(() => {
-      store.many_EditById();
       // router.push("/xcard");
     })
     .onCancel(() => {
@@ -48,20 +46,20 @@ function Reset() {
           <q-input
             v-model="store.many.document.titleField"
             filled
-            label="Cím"
-            :rules="[(v) => (v != null && v != '') || 'A hirdetés címe nem lehet üres!']"
+            label="Kategória"
+            :rules="[(v) => (v != null && v != '') || 'Kérem válasszon kategóriát!']"
             type="text"
           />
           <q-select
             v-model="store.many.document.categoryId"
             clearable
             emit-value
-            label="Kategória"
+            label="Cím"
             map-options
             option-label="categoryNameField"
             option-value="id"
             :options="store.one.documents"
-            :rules="[(v) => v != null || 'Kérem válasszon kategóriát!']"
+            :rules="[(v) => v != null || 'A cím nem lehet üres']"
           />
           <q-input
             v-model="store.many.document.descField"
@@ -69,6 +67,13 @@ function Reset() {
             label="Leírás"
             :rules="[(v) => (v != null && v != '') || 'Kérem töltse ki a leírást!']"
             type="textarea"
+          />
+          <q-input
+            v-model="store.many.document.descField"
+            filled
+            label="Hirdetés dátuma"
+            :rules="[(v) => (v != null && v != '') || 'Kérem válaszzon dátumot']"
+            type="date"
           />
           <div class="row justify-center q-gutter-lg">
             <q-btn color="green" label="Save" no-caps type="submit" />

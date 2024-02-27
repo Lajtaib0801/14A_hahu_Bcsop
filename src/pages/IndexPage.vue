@@ -15,6 +15,16 @@ onMounted(() => {
   // selectedCategoryName.value = store.many.cars[0].kategoria_id
 });
 
+function deleteDocument(): void {
+  store.many.document = { _id: store.app.selectedMany[0]._id };
+  store.app.selectedMany = [];
+}
+
+function editDocument() {
+  store.many.document._id = store.app.selectedMany[0]._id;
+  store.app.showEditDialog = true;
+}
+
 console.log(store.many.cars);
 const formatPrice = (price: number | string | undefined): string => {
   if (!price) {
@@ -108,7 +118,34 @@ const handleToggle = (toggled) => {
             <div class="text-h7 text-justify">{{ item.kepek?.[0] }}</div>
           </q-card-section>
           <q-card-actions class="justify-center" style="background-color: rgb(255, 228, 196)">
-            <q-btn class="bg-green-3" label="Hirdetés szerkesztése" no-caps type="button"></q-btn>
+            <q-btn
+              class="bg-green-3"
+              label="Hirdetés szerkesztése"
+              no-caps
+              type="button"
+              @click="store.app.showNewDialog = true"
+            ></q-btn>
+            <q-btn
+              v-show="store.app.selectedMany.length == 1"
+              color="green"
+              label="Save"
+              no-caps
+              @click="deleteDocument()"
+            />
+            <q-btn
+              v-show="store.app.selectedMany.length == 1"
+              color="red"
+              label="Reset"
+              no-caps
+              @click="editDocument()"
+            />
+            <q-btn
+              v-show="store.app.selectedMany.length == 1"
+              color="blue"
+              label="Close"
+              no-caps
+              @click="store.app.selectedMany = []"
+            />
           </q-card-actions>
         </q-card>
       </div>
