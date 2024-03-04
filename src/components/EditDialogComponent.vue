@@ -52,7 +52,6 @@ function Reset() {
           />
           <q-select
             v-model="store.many.document.categoryId"
-            clearable
             emit-value
             label="Cím"
             map-options
@@ -70,9 +69,10 @@ function Reset() {
           />
           <q-input
             v-model="store.many.document.descField"
+            clearable
             filled
             label="Hirdetés dátuma"
-            :rules="[(v) => (v != null && v != '') || 'Kérem válaszzon dátumot']"
+            :rules="[(v) => (v != null && v != '') || 'Kérem válasszon dátumot']"
             type="date"
           />
           <div class="row justify-center q-gutter-lg">

@@ -15,15 +15,15 @@ onMounted(() => {
   // selectedCategoryName.value = store.many.cars[0].kategoria_id
 });
 
-function deleteDocument(): void {
-  store.many.document = { _id: store.app.selectedMany[0]._id };
-  store.app.selectedMany = [];
-}
+// function deleteDocument(): void {
+//   store.many.document = { _id: store.app.selectedMany[0]._id };
+//   store.app.selectedMany = [];
+// }
 
-function editDocument() {
-  store.many.document._id = store.app.selectedMany[0]._id;
-  store.app.showEditDialog = true;
-}
+// function editDocument() {
+//   store.many.document._id = store.app.selectedMany[0]._id;
+//   store.app.showEditDialog = true;
+// }
 
 console.log(store.many.cars);
 const formatPrice = (price: number | string | undefined): string => {
@@ -124,27 +124,6 @@ const handleToggle = (toggled) => {
               type="button"
               @click="store.app.showNewDialog = true"
             ></q-btn>
-            <q-btn
-              v-show="store.app.selectedMany.length == 1"
-              color="green"
-              label="Save"
-              no-caps
-              @click="deleteDocument()"
-            />
-            <q-btn
-              v-show="store.app.selectedMany.length == 1"
-              color="red"
-              label="Reset"
-              no-caps
-              @click="editDocument()"
-            />
-            <q-btn
-              v-show="store.app.selectedMany.length == 1"
-              color="blue"
-              label="Close"
-              no-caps
-              @click="store.app.selectedMany = []"
-            />
           </q-card-actions>
         </q-card>
       </div>
