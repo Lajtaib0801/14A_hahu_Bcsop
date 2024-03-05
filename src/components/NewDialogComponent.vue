@@ -51,7 +51,7 @@ function Submit() {
             option-label="categoryNameField"
             option-value="id"
             :options="store.one.documents"
-            :rules="[(v) => v != null || 'A cím nem lehet üres']"
+            :rules="[(v) => v != null || 'A kategória nem lehet üres']"
             type="text"
           />
           <q-input
