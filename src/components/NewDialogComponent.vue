@@ -16,6 +16,9 @@ function Close() {
   store.app.showNewDialog = false;
 }
 
+function Reset() {
+  store.many.document = { ...store.many.documentOld }
+}
 function Submit() {
   Dialog.create({
     title: "Megerősítés",
@@ -32,6 +35,8 @@ function Submit() {
       // router.push("/xcard");
     });
 }
+
+
 </script>
 
 <template>
@@ -52,39 +57,38 @@ function Submit() {
             type="text"
           />
           <q-input
-            v-model="store.many.document.titleField"
+            v-model="store.many.document.cim"
             filled
             label="Cím"
             :rules="[(v) => (v != null && v != '') || 'Kérem válasszon kategóriát!']"
             type="text"
           />
           <q-input
-            v-model="store.many.document.titleField"
+            v-model="store.many.document.leiras"
             filled
             label="Leírás"
             :rules="[(v) => (v != null && v != '') || 'Kérem töltse ki a leírást!']"
             type="textarea"
           />
           <q-input
-            v-model="store.many.document.descField"
-            clearable
+            v-model="store.many.document.hirdetes_datum"
             filled
             label="Hirdetés dátuma"
-            :rules="[(v) => (v != null && v != '') || 'Kérem válasszon dátumot']"
             type="date"
           />
           <q-checkbox
+            v-model="store.many.document.serulesmentes"
             label="Sérülésmentes"
           />
           <q-input
-            v-model="store.many.document.titleField"
+            v-model="store.many.document.vetelar"
             filled
             label="Meghirdetett ár"
             :rules="[(v) => (v != null && v != '') || 'Kérem adja meg az árat!']"
             type="text"
           />
           <q-input
-            v-model="store.many.document.titleField"
+            v-model="store.many.document.kepek"
             filled
             label="Fotó(k) az eladó járműről"
             :rules="[(v) => (v != null && v != '') || 'Kérem adja meg az árat!']"
@@ -98,7 +102,6 @@ function Submit() {
           </div>
         </div>
       </q-form>
-      <!-- {{ store.many.document }} -->
     </q-card>
   </q-dialog>
 </template>

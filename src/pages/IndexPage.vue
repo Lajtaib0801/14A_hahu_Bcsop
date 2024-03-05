@@ -43,6 +43,11 @@ const formatPrice = (price: number | string | undefined): string => {
   return result + ubreakableSpace + "Ft";
 };
 
+const openDialog = (item) => {
+  store.many.document = item;
+  store.app.showNewDialog = true;
+};
+
 const handleToggle = (toggled) => {
   if (!toggled) {
     let slicedText = "";
@@ -77,7 +82,7 @@ const handleToggle = (toggled) => {
         :rules="[(v) => v != null || 'Kérem válasszon kategóriát!']"
       ></q-select>
     </div>
-    <NewDialogComponent/>
+    <NewDialogComponent />
     <div class="row justify-center q-ma-xl">
       <div v-for="(item, index) in store.many.cars" :key="index" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
         <q-card bordered class="q-ma-md" flat>
@@ -123,7 +128,7 @@ const handleToggle = (toggled) => {
               label="Hirdetés szerkesztése"
               no-caps
               type="button"
-              @click="store.app.showNewDialog = true"
+              @click="openDialog(item)"
             ></q-btn>
           </q-card-actions>
         </q-card>
