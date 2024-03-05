@@ -215,40 +215,40 @@ export const useStore = defineStore({
       }
     },
 
-    // async many_EditById(): Promise<void> {
-    //   if (this.many?.document?.id) {
-    //     const diff: any = {};
-    //     // the diff object only stores changed fields:
-    //     Object.keys(this.many.document).forEach((k, i) => {
-    //       const newValue = Object.values(this.many.document)[i];
-    //       const oldValue = Object.values(this.many.documentOld)[i];
-    //       if (newValue != oldValue) diff[k] = newValue;
-    //     });
-    //     if (Object.keys(diff).length == 0) {
-    //       Notify.create({
-    //         message: "Nothing changed!",
-    //         color: "negative",
-    //       });
-    //     } else {
-    //       Loading.show();
-    //       api
-    //         .patch(`api/advertisements/${this.many.document.id}`, diff)
-    //         .then((res) => {
-    //           Loading.hide();
-    //           if (res?.data?.id) {
-    //             this.many_GetAll(); // refresh dataN with read all data again from backend
-    //             Notify.create({
-    //               message: `Document with id=${res.data.id} has been edited successfully!`,
-    //               color: "positive",
-    //             });
-    //           }
-    //         })
-    //         .catch((error) => {
-    //           ShowErrorWithNotify(error);
-    //         });
-    //     }
-    //   }
-    // },
+    async many_EditById(): Promise<void> {
+      if (this.many?.document?._id) {
+        const diff: any = {};
+        // the diff object only stores changed fields:
+        Object.keys(this.many.document).forEach((k, i) => {
+          const newValue = Object.values(this.many.document)[i];
+          const oldValue = Object.values(this.many.documentOld)[i];
+          if (newValue != oldValue) diff[k] = newValue;
+        });
+        if (Object.keys(diff).length == 0) {
+          Notify.create({
+            message: "Nothing changed!",
+            color: "negative",
+          });
+        } else {
+          Loading.show();
+          api
+            .patch(`api/advertisements/${this.many.document._id}`, diff)
+            .then((res) => {
+              Loading.hide();
+              if (res?.data?.id) {
+                this.many_GetAll(); // refresh dataN with read all data again from backend
+                Notify.create({
+                  message: `Document with id=${res.data.id} has been edited successfully!`,
+                  color: "positive",
+                });
+              }
+            })
+            .catch((error) => {
+              ShowErrorWithNotify(error);
+            });
+        }
+      }
+    },
 
     // async many_DeleteById(): Promise<void> {
     //   if (this.many?.document?.id) {

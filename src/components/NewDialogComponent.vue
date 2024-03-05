@@ -17,26 +17,24 @@ function Close() {
 }
 
 function Reset() {
-  store.many.document = { ...store.many.documentOld }
+  store.many.document = { ...store.many.documentOld };
 }
 function Submit() {
   Dialog.create({
     title: "Megerősítés",
-    message: "Szeretnéd menteni az új hirdetést?",
+    message: "Szeretnéd menteni a változásokat?",
     ok: "Igen",
     cancel: "Nem",
     persistent: true,
   })
     .onOk(() => {
-      store.many_Create();
-      // router.push("/xcard");
+      store.many_EditById();
+      Close();
     })
     .onCancel(() => {
-      // router.push("/xcard");
+      Close();
     });
 }
-
-
 </script>
 
 <template>
@@ -70,16 +68,8 @@ function Submit() {
             :rules="[(v) => (v != null && v != '') || 'Kérem töltse ki a leírást!']"
             type="textarea"
           />
-          <q-input
-            v-model="store.many.document.hirdetes_datum"
-            filled
-            label="Hirdetés dátuma"
-            type="date"
-          />
-          <q-checkbox
-            v-model="store.many.document.serulesmentes"
-            label="Sérülésmentes"
-          />
+          <q-input v-model="store.many.document.hirdetes_datum" filled label="Hirdetés dátuma" type="date" />
+          <q-checkbox v-model="store.many.document.serulesmentes" label="Sérülésmentes" />
           <q-input
             v-model="store.many.document.vetelar"
             filled
