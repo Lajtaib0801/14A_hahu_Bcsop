@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// import CardComponent from "src/components/CardComponent.vue";
+import NewDialogComponent from "../components/NewDialogComponent.vue";
 import { useStore } from "src/stores/store";
 import { ref } from "vue";
 import { onMounted } from "vue";
@@ -77,6 +77,7 @@ const handleToggle = (toggled) => {
         :rules="[(v) => v != null || 'Kérem válasszon kategóriát!']"
       ></q-select>
     </div>
+    <NewDialogComponent/>
     <div class="row justify-center q-ma-xl">
       <div v-for="(item, index) in store.many.cars" :key="index" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
         <q-card bordered class="q-ma-md" flat>
