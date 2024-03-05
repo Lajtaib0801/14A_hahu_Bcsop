@@ -81,7 +81,7 @@ export default {
       <div class="text-h7 text-justify">link</div>
     </q-card-section>
     <q-card-actions class="justify-center" style="background-color: rgb(255, 228, 196)">
-      <q-btn class="bg-green-3" label="Hirdetés szerkesztése" no-caps type="button"></q-btn>
+      <q-btn class="bg-green-3" label="Hirdetés szerkesztése" no-caps type="submit"></q-btn>
     </q-card-actions>
   </q-card>
 </template>

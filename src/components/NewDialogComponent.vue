@@ -39,30 +39,66 @@ function Submit() {
     <q-card class="q-pa-md q-gutter-md" style="width: 60vw; min-width: 300px">
       <q-form @submit="Submit()">
         <div class="q-gutter-md">
-          <h5 class="text-center">Új hirdetés hozzáadása</h5>
-          <q-input
-            v-model="store.many.document.titleField"
-            filled
-            label="Cím"
-            :rules="[(v) => (v != null && v != '') || 'A hirdetés címe nem lehet üres!']"
-            type="text"
-          />
+          <h5 class="text-center">Hirdetés szerkesztése</h5>
           <q-select
             v-model="store.many.document.categoryId"
-            clearable
             emit-value
-            label="Kategória"
+            label="Ketegória"
             map-options
             option-label="categoryNameField"
             option-value="id"
             :options="store.one.documents"
-            :rules="[(v) => v != null || 'Kérem válasszon kategóriát!']"
+            :rules="[(v) => v != null || 'A cím nem lehet üres']"
+            type="text"
           />
-          <q-input v-model="store.many.document.descField" filled label="Leírás" type="textarea" />
+          <q-input
+            v-model="store.many.document.titleField"
+            filled
+            label="Cím"
+            :rules="[(v) => (v != null && v != '') || 'Kérem válasszon kategóriát!']"
+            type="text"
+          />
+          <q-input
+            v-model="store.many.document.titleField"
+            filled
+            label="Leírás"
+            :rules="[(v) => (v != null && v != '') || 'Kérem töltse ki a leírást!']"
+            type="textarea"
+          />
+          <q-input
+            v-model="store.many.document.descField"
+            clearable
+            filled
+            label="Hirdetés dátuma"
+            :rules="[(v) => (v != null && v != '') || 'Kérem válasszon dátumot']"
+            type="date"
+          />
+          <q-input
+            v-model="store.many.document.descField"
+            clearable
+            filled
+            label="Sérülésmentes"
+            type="checkbox"
+          />
+          <q-input
+            v-model="store.many.document.titleField"
+            filled
+            label="Meghirdetett ár"
+            :rules="[(v) => (v != null && v != '') || 'Kérem adja meg az árat!']"
+            type="text"
+          />
+          <q-input
+            v-model="store.many.document.titleField"
+            filled
+            label="Fotó(k) az eladó járműről"
+            :rules="[(v) => (v != null && v != '') || 'Kérem adja meg az árat!']"
+            type="text"
+          />
 
-          <div class="row justify-center q-mt-md q-gutter-lg">
-            <q-btn color="red" label="Close" no-caps @click="Close()" />
-            <q-btn color="green" label="Save document" no-caps type="submit" />
+          <div class="row justify-center q-gutter-lg">
+            <q-btn color="green" label="Save" no-caps type="submit" />
+            <q-btn color="red" label="Reset" no-caps type="reset" @click="Reset()" />
+            <q-btn color="blue" label="Close" no-caps @click="Close()" />
           </div>
         </div>
       </q-form>
