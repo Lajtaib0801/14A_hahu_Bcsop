@@ -73,12 +73,8 @@ function Submit() {
             :rules="[(v) => (v != null && v != '') || 'Kérem válasszon dátumot']"
             type="date"
           />
-          <q-input
-            v-model="store.many.document.descField"
-            clearable
-            filled
+          <q-checkbox
             label="Sérülésmentes"
-            type="checkbox"
           />
           <q-input
             v-model="store.many.document.titleField"
